@@ -1,6 +1,6 @@
 {
     "name": "natsu007/ntak-php",
-    "description": "An easy to use NTAK PHP Api",
+    "description": "An easy to use NTAK PHP Api (for PHP 7.1)",
     "license": "MIT",
     "autoload": {
         "psr-4": {
@@ -9,8 +9,8 @@
     },
     "authors": [
         {
-            "name": "Tamás Király",
-            "email": "kiralyta@gmail.com"
+            "name": "Kiss Sándor",
+            "email": "kiss.sandor89@gmail.com"
         }
     ],
     "require": {
