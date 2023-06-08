@@ -1,11 +1,15 @@
 <?php
 
-namespace Kiralyta\Ntak\Responses;
+namespace Natsu007\Ntak\Responses;
 
-use Kiralyta\Ntak\Enums\NTAKVerifyStatus;
+use Natsu007\Ntak\Enums\NTAKVerifyStatus;
 
 class NTAKVerifyResponse
 {
+    protected       $successfulMessages;
+    protected       $unsuccessfulMessages;
+    protected       $status;
+
     /**
      * __construct
      *
@@ -15,10 +19,13 @@ class NTAKVerifyResponse
      * @return void
      */
     public function __construct(
-        public readonly array            $successfulMessages,
-        public readonly array            $unsuccessfulMessages,
-        public readonly NTAKVerifyStatus $status
+        array            $successfulMessages,
+        array            $unsuccessfulMessages,
+        NTAKVerifyStatus $status
     ) {
+        $this->successfulMessages   = $successfulMessages;
+        $this->unsuccessfulMessages = $unsuccessfulMessages;
+        $this->status               = $status;
     }
 
     /**
@@ -28,7 +35,7 @@ class NTAKVerifyResponse
      */
     public function successful(): bool
     {
-        return $this->status === NTAKVerifyStatus::TELJESEN_SIKERES;
+        return $this->status == NTAKVerifyStatus::TELJESEN_SIKERES();
     }
 
     /**

@@ -1,15 +1,25 @@
 <?php
 
-namespace Kiralyta\Ntak\Models;
+namespace Natsu007\Ntak\Models;
 
 use Carbon\Carbon;
-use Kiralyta\Ntak\Enums\NTAKAmount;
-use Kiralyta\Ntak\Enums\NTAKCategory;
-use Kiralyta\Ntak\Enums\NTAKSubcategory;
-use Kiralyta\Ntak\Enums\NTAKVat;
+use Natsu007\Ntak\Enums\NTAKAmount;
+use Natsu007\Ntak\Enums\NTAKCategory;
+use Natsu007\Ntak\Enums\NTAKSubcategory;
+use Natsu007\Ntak\Enums\NTAKVat;
 
 class NTAKOrderItem
 {
+    public $name;
+    public $category;
+    public $subcategory;
+    public $vat;
+    public $price;
+    public $amountType;
+    public $amount;
+    public $quantity;
+    public $when;
+
     /**
      * __construct
      *
@@ -26,16 +36,25 @@ class NTAKOrderItem
      * @return void
      */
     public function __construct(
-        public readonly string          $name,
-        public readonly NTAKCategory    $category,
-        public readonly NTAKSubcategory $subcategory,
-        public readonly NTAKVat         $vat,
-        public readonly int             $price,
-        public readonly NTAKAmount      $amountType,
-        public readonly float           $amount,
-        public readonly int             $quantity,
-        public readonly Carbon          $when
+        string          $name,
+        NTAKCategory    $category,
+        NTAKSubcategory $subcategory,
+        NTAKVat         $vat,
+        int             $price,
+        NTAKAmount      $amountType,
+        float           $amount,
+        int             $quantity,
+        Carbon          $when
     ) {
+        $this->name         = $name;
+        $this->category     = $category;
+        $this->subcategory  = $subcategory;
+        $this->vat          = $vat;
+        $this->price        = $price;
+        $this->amountType   = $amountType;
+        $this->amount       = $amount;
+        $this->quantity     = $quantity;
+        $this->when         = $when;
     }
 
     /**
@@ -47,11 +66,11 @@ class NTAKOrderItem
     {
         return [
             'megnevezes'        => $this->name,
-            'fokategoria'       => $this->category->name,
-            'alkategoria'       => $this->subcategory->name,
-            'afaKategoria'      => $this->vat->name,
+            'fokategoria'       => $this->category->getKey(),
+            'alkategoria'       => $this->subcategory->getKey(),
+            'afaKategoria'      => $this->vat->getKey(),
             'bruttoEgysegar'    => $this->price,
-            'mennyisegiEgyseg'  => $this->amountType->name,
+            'mennyisegiEgyseg'  => $this->amountType->getKey(),
             'mennyiseg'         => $this->amount,
             'tetelszam'         => $this->quantity,
             'rendelesIdopontja' => $this->when->timezone('Europe/Budapest')->toIso8601String(),

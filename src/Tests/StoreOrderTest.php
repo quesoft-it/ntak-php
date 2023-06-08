@@ -1,20 +1,20 @@
 <?php
 
-namespace Kiralyta\Ntak\Tests;
+namespace Natsu007\Ntak\Tests;
 
 use Carbon\Carbon;
-use Kiralyta\Ntak\Enums\NTAKAmount;
-use Kiralyta\Ntak\Enums\NTAKCategory;
-use Kiralyta\Ntak\Enums\NTAKOrderType;
-use Kiralyta\Ntak\Enums\NTAKPaymentType;
-use Kiralyta\Ntak\Enums\NTAKSubcategory;
-use Kiralyta\Ntak\Enums\NTAKVat;
-use Kiralyta\Ntak\Models\NTAKOrder;
-use Kiralyta\Ntak\Models\NTAKOrderItem;
-use Kiralyta\Ntak\Models\NTAKPayment;
-use Kiralyta\Ntak\NTAK;
-use Kiralyta\Ntak\NTAKClient;
-use Kiralyta\Ntak\TestCase;
+use Natsu007\Ntak\Enums\NTAKAmount;
+use Natsu007\Ntak\Enums\NTAKCategory;
+use Natsu007\Ntak\Enums\NTAKOrderType;
+use Natsu007\Ntak\Enums\NTAKPaymentType;
+use Natsu007\Ntak\Enums\NTAKSubcategory;
+use Natsu007\Ntak\Enums\NTAKVat;
+use Natsu007\Ntak\Models\NTAKOrder;
+use Natsu007\Ntak\Models\NTAKOrderItem;
+use Natsu007\Ntak\Models\NTAKPayment;
+use Natsu007\Ntak\NTAK;
+use Natsu007\Ntak\NTAKClient;
+use Natsu007\Ntak\TestCase;
 use Ramsey\Uuid\Uuid;
 
 class StoreOrderTest extends TestCase
@@ -30,26 +30,26 @@ class StoreOrderTest extends TestCase
 
         $orderItems = [
             new NTAKOrderItem(
-                name: 'Absolut vodka',
-                category: NTAKCategory::ALKOHOLOSITAL,
-                subcategory: NTAKSubcategory::PARLAT,
-                vat: NTAKVat::C_27,
-                price: 1000,
-                amountType: NTAKAmount::LITER,
-                amount: 0.04,
-                quantity: 2,
-                when: $when
+                'Absolut vodka',
+                NTAKCategory::ALKOHOLOSITAL(),
+                NTAKSubcategory::PARLAT(),
+                NTAKVat::C_27(),
+                1000,
+                NTAKAmount::LITER(),
+                0.04,
+                2,
+                $when
             ),
             new NTAKOrderItem(
-                name: 'Túró rudi',
-                category: NTAKCategory::ETEL,
-                subcategory: NTAKSubcategory::SNACK,
-                vat: NTAKVat::C_27,
-                price: 1001,
-                amountType: NTAKAmount::DARAB,
-                amount: 1,
-                quantity: 2,
-                when: $when
+                'Túró rudi',
+                NTAKCategory::ETEL(),
+                NTAKSubcategory::SNACK(),
+                NTAKVat::C_27(),
+                1001,
+                NTAKAmount::DARAB(),
+                1,
+                2,
+                $when
             )
         ];
 
@@ -66,18 +66,20 @@ class StoreOrderTest extends TestCase
             Carbon::now()
         )->handleOrder(
             new NTAKOrder(
-                orderType: NTAKOrderType::NORMAL,
-                orderId: Uuid::uuid4(),
-                orderItems: $orderItems,
-                start: $when->copy()->addMinutes(-7),
-                end: $when,
-                payments: [
+                NTAKOrderType::NORMAL(),
+                Uuid::uuid4(),
+                $orderItems,
+                null,
+                $when->copy()->addMinutes(-7),
+                $when,
+                true,
+                [
                     new NTAKPayment(
-                        NTAKPaymentType::KESZPENZHUF,
+                        NTAKPaymentType::KESZPENZHUF(),
                         3201
                     )
                 ],
-                discount: 20
+                20
             )
         );
 

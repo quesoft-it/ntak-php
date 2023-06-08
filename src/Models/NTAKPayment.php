@@ -1,12 +1,14 @@
 <?php
 
-namespace Kiralyta\Ntak\Models;
+namespace Natsu007\Ntak\Models;
 
-use Kiralyta\Ntak\Enums\NTAKPaymentType;
+use Natsu007\Ntak\Enums\NTAKPaymentType;
 
 class NTAKPayment
 {
-    protected int $round = 0;
+    protected $round = 0;
+    public $paymentType;
+    public $total;
 
     /**
      * __construct
@@ -15,9 +17,11 @@ class NTAKPayment
      * @return void
      */
     public function __construct(
-        public readonly NTAKPaymentType $paymentType,
-        public readonly int             $total
+        NTAKPaymentType $paymentType,
+        int             $total
     ) {
+        $this->paymentType = $paymentType;
+        $this->total       = $total;
     }
 
     /**
@@ -29,13 +33,13 @@ class NTAKPayment
     {
         $rounded = 0;
         $request = [
-            'fizetesiMod'       => $this->paymentType->name,
-            'fizetettOsszegHUF' => $this->paymentType !== NTAKPaymentType::KESZPENZHUF
+            'fizetesiMod'       => $this->paymentType->getKey(),
+            'fizetettOsszegHUF' => $this->paymentType != NTAKPaymentType::KESZPENZHUF()
                 ? $this->total
                 : $rounded = (int) round($this->total / 5) * 5
         ];
 
-        if ($this->paymentType === NTAKPaymentType::KESZPENZHUF) {
+        if ($this->paymentType == NTAKPaymentType::KESZPENZHUF()) {
             $this->round = $this->total - $rounded;
         }
 

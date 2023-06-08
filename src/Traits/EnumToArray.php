@@ -1,6 +1,6 @@
 <?php
 
-namespace Kiralyta\Ntak\Traits;
+namespace Natsu007\Ntak\Traits;
 
 trait EnumToArray
 {
@@ -11,7 +11,7 @@ trait EnumToArray
      */
     public static function names(): array
     {
-        return array_column(self::cases(), 'name');
+        return array_keys(self::toArray());
     }
 
     /**
@@ -19,9 +19,9 @@ trait EnumToArray
      *
      * @return array
      */
-    public static function values(): array
+    public static function cases(): array
     {
-        return array_column(self::cases(), 'value');
+        return array_values(self::toArray());
     }
 
     /**
@@ -31,7 +31,7 @@ trait EnumToArray
      */
     public static function array(): array
     {
-        return array_combine(self::values(), self::names());
+        return array_combine(self::cases(), self::names());
     }
 
     /**
@@ -41,6 +41,6 @@ trait EnumToArray
      */
     public static function random()
     {
-        return self::cases()[array_rand(self::cases())];
+        return self::values()[array_rand(self::values())];
     }
 }

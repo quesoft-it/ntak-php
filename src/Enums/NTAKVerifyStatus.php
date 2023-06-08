@@ -1,16 +1,17 @@
 <?php
 
-namespace Kiralyta\Ntak\Enums;
+namespace Natsu007\Ntak\Enums;
 
-use Kiralyta\Ntak\Traits\EnumToArray;
+use MyCLabs\Enum\Enum;
+use Natsu007\Ntak\Traits\EnumToArray;
 
-enum NTAKVerifyStatus: string
+final class NTAKVerifyStatus extends Enum
 {
     use EnumToArray;
 
-    case BEFOGADVA = 'BEFOGADVA';
-    case TELJESEN_HIBAS = 'TELJESEN_HIBAS';
-    case RESZBEN_SIKERES = 'RESZBEN_SIKERES';
-    case TELJESEN_SIKERES = 'TELJESEN_SIKERES';
-    case UJRA_KULDENDO = 'UJRA_KULDENDO';
+    const BEFOGADVA = 'BEFOGADVA';
+    const TELJESEN_HIBAS = 'TELJESEN_HIBAS';
+    const RESZBEN_SIKERES = 'RESZBEN_SIKERES';
+    const TELJESEN_SIKERES = 'TELJESEN_SIKERES';
+    const UJRA_KULDENDO = 'UJRA_KULDENDO';
 }

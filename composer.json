@@ -1,10 +1,10 @@
 {
-    "name": "kiralyta/ntak-php",
+    "name": "natsu007/ntak-php",
     "description": "An easy to use NTAK PHP Api",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Kiralyta\\Ntak\\": "src/"
+            "Natsu007\\Ntak\\": "src/"
         }
     },
     "authors": [
@@ -14,15 +14,16 @@
         }
     ],
     "require": {
-        "php": "^8.1",
-        "guzzlehttp/guzzle": "^7.0",
+        "php": "^7.1",
+        "guzzlehttp/guzzle": "*",
         "nesbot/carbon": "^2.66",
-        "gamegos/jws": "^1.0"
+        "gamegos/jws": "^1.0",
+        "myclabs/php-enum": "^1.7.7"
     },
     "require-dev": {
-        "phpunit/phpunit": "^10.1",
-        "symfony/var-dumper": "^6.2",
-        "illuminate/collections": "^10.1",
-        "ramsey/uuid": "^4.7"
+        "phpunit/phpunit": "^7.5.20",
+        "symfony/var-dumper": "^4.4.47",
+        "tightenco/collect": "^8.0.4",
+        "ramsey/uuid": "^3.9.7"
     }
 }

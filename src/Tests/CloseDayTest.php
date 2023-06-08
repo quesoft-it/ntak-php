@@ -1,12 +1,12 @@
 <?php
 
-namespace Kiralyta\Ntak\Tests;
+namespace Natsu007\Ntak\Tests;
 
 use Carbon\Carbon;
-use Kiralyta\Ntak\Enums\NTAKDayType;
-use Kiralyta\Ntak\NTAK;
-use Kiralyta\Ntak\NTAKClient;
-use Kiralyta\Ntak\TestCase;
+use Natsu007\Ntak\Enums\NTAKDayType;
+use Natsu007\Ntak\NTAK;
+use Natsu007\Ntak\NTAKClient;
+use Natsu007\Ntak\TestCase;
 
 class CloseDayTest extends TestCase
 {
@@ -31,7 +31,7 @@ class CloseDayTest extends TestCase
         )->closeDay(
             Carbon::now()->addHours(-8),
             Carbon::now()->addMinutes(-2),
-            NTAKDayType::NORMAL_NAP
+            NTAKDayType::NORMAL_NAP()
         );
 
         $this->assertIsString($response);

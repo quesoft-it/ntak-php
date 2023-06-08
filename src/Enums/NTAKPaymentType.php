@@ -1,20 +1,21 @@
 <?php
 
-namespace Kiralyta\Ntak\Enums;
+namespace Natsu007\Ntak\Enums;
 
-use Kiralyta\Ntak\Traits\EnumToArray;
+use MyCLabs\Enum\Enum;
+use Natsu007\Ntak\Traits\EnumToArray;
 
-enum NTAKPaymentType: string
+final class NTAKPaymentType extends Enum
 {
     use EnumToArray;
 
-    case KESZPENZHUF = 'Készpénz huf';
-    case KESZPENZEUR = 'Készpénz eur';
-    case SZEPKARTYA = 'Szépkártya';
-    case BANKKARTYA = 'Bankkártya';
-    case ATUTALAS = 'Átutalás';
-    case EGYEB = 'Egyéb';
-    case VOUCHER = 'Voucher';
-    case SZOBAHITEL = 'Szobahitel';
-    case KEREKITES = 'Kerekítés';
+    const KESZPENZHUF = 'Készpénz huf';
+    const KESZPENZEUR = 'Készpénz eur';
+    const SZEPKARTYA = 'Szépkártya';
+    const BANKKARTYA = 'Bankkártya';
+    const ATUTALAS = 'Átutalás';
+    const EGYEB = 'Egyéb';
+    const VOUCHER = 'Voucher';
+    const SZOBAHITEL = 'Szobahitel';
+    const KEREKITES = 'Kerekítés';
 }

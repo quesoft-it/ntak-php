@@ -1,18 +1,21 @@
 <?php
 
-namespace Kiralyta\Ntak;
+namespace Natsu007\Ntak;
 
 use Carbon\Carbon;
-use Kiralyta\Ntak\Enums\NTAKCategory;
-use Kiralyta\Ntak\Enums\NTAKDayType;
-use Kiralyta\Ntak\Enums\NTAKOrderType;
-use Kiralyta\Ntak\Enums\NTAKSubcategory;
-use Kiralyta\Ntak\Enums\NTAKVerifyStatus;
-use Kiralyta\Ntak\Models\NTAKOrder;
-use Kiralyta\Ntak\Responses\NTAKVerifyResponse;
+use Natsu007\Ntak\Enums\NTAKCategory;
+use Natsu007\Ntak\Enums\NTAKDayType;
+use Natsu007\Ntak\Enums\NTAKOrderType;
+use Natsu007\Ntak\Enums\NTAKSubcategory;
+use Natsu007\Ntak\Enums\NTAKVerifyStatus;
+use Natsu007\Ntak\Models\NTAKOrder;
+use Natsu007\Ntak\Responses\NTAKVerifyResponse;
 
 class NTAK
 {
+    protected      $client;
+    protected      $when;
+
     /**
      * __construct
      *
@@ -21,9 +24,11 @@ class NTAK
      * @return void
      */
     public function __construct(
-        public readonly NTAKClient $client,
-        protected       Carbon $when
+        NTAKClient $client,
+        Carbon $when
     ) {
+        $this->client = $client;
+        $this->when   = $when;
     }
 
     /**
@@ -33,7 +38,7 @@ class NTAK
      */
     public static function categories(): array
     {
-        return NTAKCategory::values();
+        return NTAKCategory::cases();
     }
 
     /**
@@ -82,27 +87,27 @@ class NTAK
         $orders = [];
         foreach ($ntakOrders as $ntakOrder) {
             $orders[] = [
-                'rendelesBesorolasa'           => $ntakOrder->orderType->name,
+                'rendelesBesorolasa'           => $ntakOrder->orderType->getKey(),
                 'rmsRendelesAzonosito'         => $ntakOrder->orderId,
-                'hivatkozottRendelesOsszesito' => $ntakOrder->orderType === NTAKOrderType::NORMAL
+                'hivatkozottRendelesOsszesito' => $ntakOrder->orderType == NTAKOrderType::NORMAL()
                     ? null
                     : $ntakOrder->ntakOrderId,
                 'targynap'                     => $ntakOrder->end->format('Y-m-d'),
-                'rendelesKezdete'              => $ntakOrder->orderType === NTAKOrderType::STORNO
+                'rendelesKezdete'              => $ntakOrder->orderType == NTAKOrderType::STORNO()
                     ? null
                     : $ntakOrder->start->timezone('Europe/Budapest')->toIso8601String(),
-                'rendelesVege'                 => $ntakOrder->orderType === NTAKOrderType::STORNO
+                'rendelesVege'                 => $ntakOrder->orderType == NTAKOrderType::STORNO()
                     ? null
                     : $ntakOrder->end->timezone('Europe/Budapest')->toIso8601String(),
                 'helybenFogyasztott'           => $ntakOrder->isAtTheSpot,
                 'osszesitett'                  => false,
-                'fizetesiInformaciok'          => $ntakOrder->orderType === NTAKOrderType::STORNO
+                'fizetesiInformaciok'          => $ntakOrder->orderType == NTAKOrderType::STORNO()
                     ? null
                     : [
                         'rendelesVegosszegeHUF' => $ntakOrder->totalWithDiscount(),
                         'fizetesiModok'         => $ntakOrder->buildPaymentTypes(),
                     ],
-                'rendelesTetelek'              => $ntakOrder->orderType === NTAKOrderType::STORNO
+                'rendelesTetelek'              => $ntakOrder->orderType == NTAKOrderType::STORNO()
                     ? null
                     : $ntakOrder->buildOrderItems(),
             ];
@@ -137,11 +142,11 @@ class NTAK
         $message = [
             'zarasiInformaciok' => [
                 'targynap'           => $start->format('Y-m-d'),
-                'targynapBesorolasa' => $dayType->name,
-                'nyitasIdopontja'    => $dayType !== NTAKDayType::ADOTT_NAPON_ZARVA
+                'targynapBesorolasa' => $dayType->getKey(),
+                'nyitasIdopontja'    => $dayType != NTAKDayType::ADOTT_NAPON_ZARVA()
                     ? $start->timezone('Europe/Budapest')->toIso8601String()
                     : null,
-                'zarasIdopontja'     => $dayType !== NTAKDayType::ADOTT_NAPON_ZARVA
+                'zarasIdopontja'     => $dayType != NTAKDayType::ADOTT_NAPON_ZARVA()
                     ? $end->timezone('Europe/Budapest')->toIso8601String()
                     : null,
                 'osszesBorravalo'    => $tips,
@@ -179,9 +184,9 @@ class NTAK
         )['uzenetValaszok'][0];
 
         return new NTAKVerifyResponse(
-            successfulMessages:   $response['sikeresUzenetek'],
-            unsuccessfulMessages: $response['sikertelenUzenetek'],
-            status:               NTAKVerifyStatus::from($response['statusz'])
+            $response['sikeresUzenetek'],
+            $response['sikertelenUzenetek'],
+            new NTAKVerifyStatus($response['statusz'])
         );
     }
 }

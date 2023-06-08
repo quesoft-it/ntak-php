@@ -1,4 +1,6 @@
-# NTAK RMS PHP API / SDK
+# NTAK RMS PHP API / SDK (FOR PHP 7.1)
+
+**This is a fork from [https://github.com/kiralyta/ntak-php](https://github.com/kiralyta/ntak-php) repostitory, so I can use API in php 7.1. I hope it helps others who cannot use the latest version of php due to other dependencies. Remdme.md has been partially rewritten to comply with php 7.1. I left the other parts in their original form.**
 
 Welcome to my little package, that helps you make NTAK RMS requests like a boss.
 
@@ -19,10 +21,8 @@ Table of Contents:
 ## Installation
 
 ``` bash
-composer require kiralyta/ntak-php
+composer require natsu007/ntak-php
 ```
-
-> The package requires PHP ^8.1 since it was built around PHP enums.
 
 ## Usage
 
@@ -31,7 +31,7 @@ composer require kiralyta/ntak-php
 #### Create an API Client Instance
 
 ``` php
-use Kiralyta\Ntak\NTAKClient;
+use Natsu007\Ntak\NTAKClient;
 
 $client = new NTAKClient(
     taxNumber:        'NTAK client tax nr',         // without `-` chars
@@ -60,19 +60,19 @@ $client->lastRequestTime(); // Returns an integer
 
 ``` php
 use Carbon\Carbon;
-use Kiralyta\Ntak\Enums\NTAKAmount;
-use Kiralyta\Ntak\Enums\NTAKCategory;
-use Kiralyta\Ntak\Enums\NTAKSubcategory;
-use Kiralyta\Ntak\Enums\NTAKVat;
-use Kiralyta\Ntak\Models\NTAKOrderItem;
+use Natsu007\Ntak\Enums\NTAKAmount;
+use Natsu007\Ntak\Enums\NTAKCategory;
+use Natsu007\Ntak\Enums\NTAKSubcategory;
+use Natsu007\Ntak\Enums\NTAKVat;
+use Natsu007\Ntak\Models\NTAKOrderItem;
 
 $orderItem = new NTAKOrderItem(
     name:            'Absolut Vodka',             // Any kind of string
-    category:        NTAKCategory::ALKOHOLOSITAL, // Main category
-    subcategory:     NTAKSubcategory::PARLAT,     // Subcategory
-    vat:             NTAKVat::C_27,
+    category:        NTAKCategory::ALKOHOLOSITAL(), // Main category
+    subcategory:     NTAKSubcategory::PARLAT(),     // Subcategory
+    vat:             NTAKVat::C_27(),
     price:           1000
-    amountType:      NTAKAmount::LITER,
+    amountType:      NTAKAmount::LITER(),
     amount:          0.04,
     quantity:        2,
     when:            Carbon::now()
@@ -87,11 +87,11 @@ $orderItem = new NTAKOrderItem(
 #### Create a Payment Instance
 
 ``` php
-use Kiralyta\Ntak\Enums\NTAKPaymentType;
-use Kiralyta\Ntak\Models\NTAKPayment;
+use Natsu007\Ntak\Enums\NTAKPaymentType;
+use Natsu007\Ntak\Models\NTAKPayment;
 
 $payment = new NTAKPayment(
-    paymentType:     NTAKPaymentType::BANKKARTYA,
+    paymentType:     NTAKPaymentType::BANKKARTYA(),
     total:           2000 // Total payed with this method type
 );
 ```
@@ -102,13 +102,13 @@ $payment = new NTAKPayment(
 
 ``` php
 use Carbon\Carbon;
-use Kiralyta\Ntak\Enums\NTAKOrderType;
-use Kiralyta\Ntak\Models\NTAKOrderItem;
-use Kiralyta\Ntak\Models\NTAKOrder;
-use Kiralyta\Ntak\Models\NTAKPayment;
+use Natsu007\Ntak\Enums\NTAKOrderType;
+use Natsu007\Ntak\Models\NTAKOrderItem;
+use Natsu007\Ntak\Models\NTAKOrder;
+use Natsu007\Ntak\Models\NTAKPayment;
 
 $order = new NTAKOrder(
-    orderType:  NTAKOrderType::NORMAL,         // You can control whether to store, update, or destroy an order
+    orderType:  NTAKOrderType::NORMAL(),         // You can control whether to store, update, or destroy an order
     orderId:    'your-rms-order-id',           // RMS Order ID
     orderItems: [new NTAKOrderItem(...)],      // Array of the order items
     start:      Carbon::now()->addMinutes(-7), // Start of the order
@@ -132,9 +132,9 @@ $order = new NTAKOrder(
 
 ``` php
 use Carbon\Carbon;
-use Kiralyta\Ntak\Models\NTAKOrder;
-use Kiralyta\Ntak\Models\NTAKPayment;
-use Kiralyta\Ntak\NTAK;
+use Natsu007\Ntak\Models\NTAKOrder;
+use Natsu007\Ntak\Models\NTAKPayment;
+use Natsu007\Ntak\NTAK;
 
 $processId = NTAK::message($client, Carbon::now())
     ->handleOrder(new NTAKOrder(...));
@@ -148,14 +148,14 @@ $processId = NTAK::message($client, Carbon::now())
 
 ``` php
 use Carbon\Carbon;
-use Kiralyta\Ntak\Enums\NTAKDayType;
-use Kiralyta\Ntak\NTAK;
+use Natsu007\Ntak\Enums\NTAKDayType;
+use Natsu007\Ntak\NTAK;
 
 $processId = NTAK::message($client, Carbon::now())
     ->closeDay(
         start:   Carbon::now()->addHours(-10), // Opening time (nullable)
         end:     Carbon::now(),                // Closing time (nullable)
-        dayType: NTAKDayType::NORMAL_NAP,      // Day type
+        dayType: NTAKDayType::NORMAL_NAP(),      // Day type
         tips:    1000                          // Tips (default 0)
     );
 ```
@@ -168,8 +168,8 @@ $processId = NTAK::message($client, Carbon::now())
 
 ``` php
 use Carbon\Carbon;
-use Kiralyta\Ntak\Enums\NTAKDayType;
-use Kiralyta\Ntak\NTAK;
+use Natsu007\Ntak\Enums\NTAKDayType;
+use Natsu007\Ntak\NTAK;
 
 $response = NTAK::message($client, Carbon::now())
     ->verify(
@@ -195,7 +195,7 @@ $response->unsuccessfulMessages; // Returns an array of the unsuccessful message
 Namespace of the enums:
 
 ``` php
-namespace Kiralyta\Ntak\Enums;
+namespace Natsu007\Ntak\Enums;
 ```
 
 You can use the ```values()``` static method on any of the enums, in order to get the available values.
@@ -313,7 +313,7 @@ You can use the ```values()``` static method on any of the enums, in order to ge
 ## Contribution
 
 ``` bash
-git clone git@github.com:kiralyta/ntak-php.git
+git clone git@github.com:natsu007/ntak-php.git
 cd ntak-php
 composer install --dev
 ```
@@ -325,13 +325,3 @@ Put your ```cer.cer``` and ```pem.pem``` files in ```./auth``` directory, then r
 ``` bash
 vendor/bin/phpunit src/Tests
 ```
-
-## Last Words
-
-I am not taking any responsiblities for the use of this package.
-
-This is simply a personal project that could help other fellow software artisans to make requests to MTÜ.
-
-It's still recommended to read the documentation of the RMS Interface, even in case of using this package.
-
-Please feel free to open an issue if you encounter one.

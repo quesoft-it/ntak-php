@@ -1,26 +1,34 @@
 <?php
 
-namespace Kiralyta\Ntak;
+namespace Natsu007\Ntak;
 
 use Carbon\Carbon;
 use Gamegos\JWS\JWS;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
-use Kiralyta\Ntak\Exceptions\NTAKClientException;
+use Natsu007\Ntak\Exceptions\NTAKClientException;
 
 class NTAKClient
 {
-    protected Client     $client;
-    protected Carbon     $when;
-    protected string     $url;
-    protected array      $lastRequest;
-    protected array      $lastResponse;
-    protected int        $lastRequestTime; // milliseconds
-    protected ?array     $fakeResponse = null;
+    protected      $taxNumber;
+    protected      $regNumber;
+    protected      $softwareRegNumber;
+    protected      $version;
+    protected      $certPath;
+    protected      $keyPath;
+    protected      $testing;
 
-    protected static string $prodUrl = 'https://rms.ntaktst.hu';
-    protected static string $testUrl = 'https://rms.tesztntak.hu';
+    protected      $client;
+    protected      $when;
+    protected      $url;
+    protected      $lastRequest;
+    protected      $lastResponse;
+    protected      $lastRequestTime; // milliseconds
+    protected      $fakeResponse = null;
+
+    protected static $prodUrl = 'https://rms.ntaktst.hu';
+    protected static $testUrl = 'https://rms.tesztntak.hu';
 
     /**
      * __construct
@@ -35,14 +43,22 @@ class NTAKClient
      * @return void
      */
     public function __construct(
-        protected string $taxNumber,
-        protected string $regNumber,
-        protected string $softwareRegNumber,
-        protected string $version,
-        protected string $certPath,
-        protected string $keyPath,
-        protected bool   $testing = false
+        string $taxNumber,
+        string $regNumber,
+        string $softwareRegNumber,
+        string $version,
+        string $certPath,
+        string $keyPath,
+        bool   $testing = false
     ) {
+        $this->taxNumber         = $taxNumber;
+        $this->regNumber         = $regNumber;
+        $this->softwareRegNumber = $softwareRegNumber;
+        $this->version           = $version;
+        $this->certPath          = $certPath;
+        $this->keyPath           = $keyPath;
+        $this->testing           = $testing;
+
         $this->url = $testing
             ? self::$testUrl
             : self::$prodUrl;

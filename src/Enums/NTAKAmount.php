@@ -1,15 +1,16 @@
 <?php
 
-namespace Kiralyta\Ntak\Enums;
+namespace Natsu007\Ntak\Enums;
 
-use Kiralyta\Ntak\Traits\EnumToArray;
+use MyCLabs\Enum\Enum;
+use Natsu007\Ntak\Traits\EnumToArray;
 
-enum NTAKAmount: string
+final class NTAKAmount extends Enum
 {
     use EnumToArray;
 
-    case DARAB = 'darab';
-    case LITER = 'liter';
-    case KILOGRAMM = 'kilogramm';
-    case EGYSEG = 'egyseg';
+    const DARAB = 'darab';
+    const LITER = 'liter';
+    const KILOGRAMM = 'kilogramm';
+    const EGYSEG = 'egyseg';
 }

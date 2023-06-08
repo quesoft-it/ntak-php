@@ -1,12 +1,12 @@
 <?php
 
-namespace Kiralyta\Ntak\Tests;
+namespace Natsu007\Ntak\Tests;
 
 use Carbon\Carbon;
-use Kiralyta\Ntak\NTAK;
-use Kiralyta\Ntak\NTAKClient;
-use Kiralyta\Ntak\Responses\NTAKVerifyResponse;
-use Kiralyta\Ntak\TestCase;
+use Natsu007\Ntak\NTAK;
+use Natsu007\Ntak\NTAKClient;
+use Natsu007\Ntak\Responses\NTAKVerifyResponse;
+use Natsu007\Ntak\TestCase;
 
 class VerifyTest extends TestCase
 {

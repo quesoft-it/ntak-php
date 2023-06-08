@@ -1,16 +1,17 @@
 <?php
 
-namespace Kiralyta\Ntak\Enums;
+namespace Natsu007\Ntak\Enums;
 
-use Kiralyta\Ntak\Traits\EnumToArray;
+use MyCLabs\Enum\Enum;
+use Natsu007\Ntak\Traits\EnumToArray;
 
-enum NTAKVat: string
+final class NTAKVat extends Enum
 {
     use EnumToArray;
 
-    case A_5 = '5%';
-    case B_18 = '18%';
-    case C_27 = '27%';
-    case D_AJT = 'Ajt';
-    case E_0 = '0%';
+    const A_5 = '5%';
+    const B_18 = '18%';
+    const C_27 = '27%';
+    const D_AJT = 'Ajt';
+    const E_0 = '0%';
 }

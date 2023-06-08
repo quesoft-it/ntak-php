@@ -1,14 +1,15 @@
 <?php
 
-namespace Kiralyta\Ntak\Enums;
+namespace Natsu007\Ntak\Enums;
 
-use Kiralyta\Ntak\Traits\EnumToArray;
+use MyCLabs\Enum\Enum;
+use Natsu007\Ntak\Traits\EnumToArray;
 
-enum NTAKDayType: string
+final class NTAKDayType extends Enum
 {
     use EnumToArray;
 
-    case ADOTT_NAPON_ZARVA = 'Adott napon zárva';
-    case FORGALOM_NELKULI_NAP = 'Forgalom nélküli nap';
-    case NORMAL_NAP = 'Normál nap';
+    const ADOTT_NAPON_ZARVA = 'Adott napon zárva';
+    const FORGALOM_NELKULI_NAP = 'Forgalom nélküli nap';
+    const NORMAL_NAP = 'Normál nap';
 }

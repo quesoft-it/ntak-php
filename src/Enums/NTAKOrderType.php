@@ -1,10 +1,12 @@
 <?php
 
-namespace Kiralyta\Ntak\Enums;
+namespace Natsu007\Ntak\Enums;
 
-enum NTAKOrderType: string
+use MyCLabs\Enum\Enum;
+
+final class NTAKOrderType extends Enum
 {
-    case NORMAL = 'Normál';
-    case STORNO = 'Storno';
-    case HELYESBITO = 'Helyesbítő';
+    const NORMAL = 'Normál';
+    const STORNO = 'Storno';
+    const HELYESBITO = 'Helyesbítő';
 }

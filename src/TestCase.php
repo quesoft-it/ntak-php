@@ -1,15 +1,15 @@
 <?php
 
-namespace Kiralyta\Ntak;
+namespace Natsu007\Ntak;
 
 use PHPUnit\Framework\TestCase as FrameworkTestCase;
 
 class TestCase extends FrameworkTestCase
 {
-    protected string $taxNumber = '11223344122';
-    protected string $regNumber = 'ET23002480';
-    protected string $softwareRegNumber = 'TABTENDER';
-    protected string $version = '1.4.21';
-    protected string $certPath = __DIR__.'/../auth/cer.cer';
-    protected string $keyPath = __DIR__.'/../auth/pem.pem';
+    protected $taxNumber = '11223344122';
+    protected $regNumber = 'ET23002557';
+    protected $softwareRegNumber = 'SKYLON';
+    protected $version = '3.2';
+    protected $certPath = __DIR__.'/../auth/cer.cer';
+    protected $keyPath = __DIR__.'/../auth/pem.pem';
 }

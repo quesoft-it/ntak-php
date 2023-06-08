@@ -1,6 +1,6 @@
 <?php
 
-namespace Kiralyta\Ntak\Exceptions;
+namespace Natsu007\Ntak\Exceptions;
 
 use Exception;
 
