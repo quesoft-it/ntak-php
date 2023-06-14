@@ -93,21 +93,21 @@ class NTAK
                     ? null
                     : $ntakOrder->ntakOrderId,
                 'targynap'                     => $ntakOrder->end->format('Y-m-d'),
-                'rendelesKezdete'              => $ntakOrder->orderType == NTAKOrderType::STORNO()
+                'rendelesKezdete'              => $ntakOrder->orderType == NTAKOrderType::SZTORNO()
                     ? null
                     : $ntakOrder->start->timezone('Europe/Budapest')->toIso8601String(),
-                'rendelesVege'                 => $ntakOrder->orderType == NTAKOrderType::STORNO()
+                'rendelesVege'                 => $ntakOrder->orderType == NTAKOrderType::SZTORNO()
                     ? null
                     : $ntakOrder->end->timezone('Europe/Budapest')->toIso8601String(),
                 'helybenFogyasztott'           => $ntakOrder->isAtTheSpot,
                 'osszesitett'                  => false,
-                'fizetesiInformaciok'          => $ntakOrder->orderType == NTAKOrderType::STORNO()
+                'fizetesiInformaciok'          => $ntakOrder->orderType == NTAKOrderType::SZTORNO()
                     ? null
                     : [
                         'rendelesVegosszegeHUF' => $ntakOrder->totalWithDiscount(),
                         'fizetesiModok'         => $ntakOrder->buildPaymentTypes(),
                     ],
-                'rendelesTetelek'              => $ntakOrder->orderType == NTAKOrderType::STORNO()
+                'rendelesTetelek'              => $ntakOrder->orderType == NTAKOrderType::SZTORNO()
                     ? null
                     : $ntakOrder->buildOrderItems(),
             ];
@@ -134,8 +134,8 @@ class NTAK
      * @return string
      */
     public function closeDay(
-        ?Carbon     $start,
-        ?Carbon     $end,
+        Carbon      $start,
+        ?Carbon     $end = null,
         NTAKDayType $dayType,
         int         $tips = 0
     ): string {
@@ -184,8 +184,9 @@ class NTAK
         )['uzenetValaszok'][0];
 
         return new NTAKVerifyResponse(
-            $response['sikeresUzenetek'],
-            $response['sikertelenUzenetek'],
+            $response['sikeresUzenetek'] ?? [],
+            $response['sikertelenUzenetek'] ?? [],
+            $response['fejlecHibak'] ?? [],
             new NTAKVerifyStatus($response['statusz'])
         );
     }

@@ -7,6 +7,6 @@ use MyCLabs\Enum\Enum;
 final class NTAKOrderType extends Enum
 {
     const NORMAL = 'Normál';
-    const STORNO = 'Storno';
+    const SZTORNO = 'Storno';
     const HELYESBITO = 'Helyesbítő';
 }

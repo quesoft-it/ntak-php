@@ -10,6 +10,5 @@ class TestCase extends FrameworkTestCase
     protected $regNumber = 'ET23002557';
     protected $softwareRegNumber = 'SKYLON';
     protected $version = '3.2';
-    protected $certPath = __DIR__.'/../auth/cer.cer';
-    protected $keyPath = __DIR__.'/../auth/pem.pem';
+    protected $certPath = __DIR__.'/../auth/pem.pem';
 }

@@ -60,10 +60,15 @@ class NTAKOrderItem
     /**
      * buildRequest
      *
+     * @param  bool $isAtTheSpot
      * @return array
      */
-    public function buildRequest(): array
+    public function buildRequest(bool $isAtTheSpot = true): array
     {
+        $this->vat = ! $isAtTheSpot && $this->category == NTAKCategory::ALKMENTESITAL_HELYBEN()
+            ?  NTAKVat::C_27()
+            : $this->vat;
+
         return [
             'megnevezes'        => $this->name,
             'fokategoria'       => $this->category->getKey(),
@@ -76,5 +81,55 @@ class NTAKOrderItem
             'rendelesIdopontja' => $this->when->timezone('Europe/Budapest')->toIso8601String(),
             'tetelOsszesito'    => $this->quantity * $this->price,
         ];
+    }
+
+    /**
+     * buildDiscountRequest
+     *
+     * @param  NTAKVat $vat
+     * @param  int     $price
+     * @param  Carbon  $when
+     * @return array
+     */
+    public static function buildDiscountRequest(NTAKVat $vat, int $price, Carbon $when): array
+    {
+        return (
+            new static(
+                'Kedvezmény',
+                NTAKCategory::EGYEB(),
+                NTAKSubcategory::KEDVEZMENY(),
+                $vat,
+                $price,
+                NTAKAmount::DARAB(),
+                1,
+                1,
+                $when
+            )
+        )->buildRequest();
+    }
+
+    /**
+     * buildServiceFeeRequest
+     *
+     * @param  NTAKVat $vat
+     * @param  int     $price
+     * @param  Carbon  $when
+     * @return array
+     */
+    public static function buildServiceFeeRequest(NTAKVat $vat, int $price, Carbon $when): array
+    {
+        return (
+            new static(
+                'Szervízdíj',
+                NTAKCategory::EGYEB(),
+                NTAKSubcategory::SZERVIZDIJ(),
+                $vat,
+                $price,
+                NTAKAmount::DARAB(),
+                1,
+                1,
+                $when
+            )
+        )->buildRequest();
     }
 }

@@ -2,6 +2,8 @@
 
 **This is a fork from [https://github.com/kiralyta/ntak-php](https://github.com/kiralyta/ntak-php) repostitory, so I can use API in php 7.1. I hope it helps others who cannot use the latest version of php due to other dependencies. Remdme.md has been partially rewritten to comply with php 7.1. I left the other parts in their original form.**
 
+**Update: I have created a development branch into which I am constantly synchronizing the latest updates from "kiralyta / ntak-php". I will rewrite the updated code if necessary so that it runs in php 7.1. Unit tests are performed on every update. Each update gets a tag.**
+
 Welcome to my little package, that helps you make NTAK RMS requests like a boss.
 
 Table of Contents:
@@ -34,13 +36,12 @@ composer require natsu007/ntak-php
 use Natsu007\Ntak\NTAKClient;
 
 $client = new NTAKClient(
-    taxNumber:        'NTAK client tax nr',         // without `-` chars
-    regNumber:        'NTAK client registration nr',
-    sofwareReqNumber: 'NTAK RMS registration id',
-    version:          'NTAK RMS version',
-    certPath:         '/path/to/your.cer',
-    keyPath:          '/path/to/your.pem',
-    testing:          false                         // whether to hit the test NTAK API
+    taxNumber:         'NTAK client tax nr',         // without `-` chars
+    regNumber:         'NTAK client registration nr',
+    softwareRegNumber: 'NTAK RMS registration id',
+    version:           'NTAK RMS version',
+    certPath:          '/path/to/your.pem',
+    testing:           false                         // whether to hit the test NTAK API
 );
 ```
 
@@ -67,11 +68,11 @@ use Natsu007\Ntak\Enums\NTAKVat;
 use Natsu007\Ntak\Models\NTAKOrderItem;
 
 $orderItem = new NTAKOrderItem(
-    name:            'Absolut Vodka',             // Any kind of string
+    name:            'Absolut Vodka',               // Any kind of string
     category:        NTAKCategory::ALKOHOLOSITAL(), // Main category
     subcategory:     NTAKSubcategory::PARLAT(),     // Subcategory
     vat:             NTAKVat::C_27(),
-    price:           1000
+    price:           1000,
     amountType:      NTAKAmount::LITER(),
     amount:          0.04,
     quantity:        2,
@@ -108,19 +109,33 @@ use Natsu007\Ntak\Models\NTAKOrder;
 use Natsu007\Ntak\Models\NTAKPayment;
 
 $order = new NTAKOrder(
-    orderType:  NTAKOrderType::NORMAL(),         // You can control whether to store, update, or destroy an order
-    orderId:    'your-rms-order-id',           // RMS Order ID
-    orderItems: [new NTAKOrderItem(...)],      // Array of the order items
-    start:      Carbon::now()->addMinutes(-7), // Start of the order
-    end:        Carbon::now(),                 // End of the order
-    payments:   [new NTAKPayment(...)],         // Array of the payments
+    orderType:   NTAKOrderType::NORMAL(),       // You can control whether to store, update, or destroy an order
+    orderId:     'your-rms-order-id',           // RMS Order ID
+    orderItems:  [new NTAKOrderItem(...)],      // Array of the order items
+    start:       Carbon::now()->addMinutes(-7), // Start of the order
+    end:         Carbon::now(),                 // End of the order
+    payments:    [new NTAKPayment(...)],        // Array of the payments
 
-    // Discount is automatically managed by the package
-    // You don't have to manually add an OrderItem with "KEDVEZMENY" subcategory
-    // This means 20% discount (defaults to 0)
-    discount:   20
+    // Take away handled automatically
+    // Vat changed to 27 in all OrderItems that have a category "Helyben készített alkoholmentes ital" in case of isAtTheSpot is false
+    isAtTheSpot: true,
+
+    // Discount and service fee are automatically managed by the package
+    // You don't have to manually add the OrderItem(s) with "KEDVEZMENY" / "SZERVIZDIJ" subcategories
+    // Vats are handled automatically as well
+    // If both discount and service fee are provided, the service fee will be calculated from the discounted total
+    // The following means 20% discount (defaults to 0) and 10% service fee (defaults to 0)
+    discount:    20,
+    serviceFee:  10,
+
+    // Only on update / destroy
+    ntakOrderId: 'your-previous-order-id'
 );
 ```
+
+> When you are updating / destroying an order, you need to provide (generate) a new `orderId` with each requests.
+>
+> In these cases, the `ntakOrderId` is always the last provided `orderId`.
 
 > - [NTAKOrderType](#ntakordertype)
 > - [NTAKOrderItem](#create-an-order-item-instance)
@@ -173,7 +188,7 @@ use Natsu007\Ntak\NTAK;
 
 $response = NTAK::message($client, Carbon::now())
     ->verify(
-        process_id: 'NTAK Process ID'
+        processId: 'NTAK Process ID'
     );
 ```
 
@@ -185,6 +200,7 @@ $response->unsuccessful();       // Check whether our message was processed unsu
 $response->status;               // Returns an NTAKVerifyStatus
 $response->successfulMessages;   // Returns an array of the successful messages
 $response->unsuccessfulMessages; // Returns an array of the unsuccessful messages
+$response->headerErrors;         // Returns an array of the header errors
 ```
 
 > If you encounter an unsuccessful message, you should further examine [NTAKVerifyStatus](#ntakverifystatus).
@@ -273,7 +289,7 @@ You can use the ```values()``` static method on any of the enums, in order to ge
 | name       | value ***string*** |
 | --------   | -----------------  |
 | NORMAL     | Normál             |
-| STORNO     | Storno             |
+| SZTORNO    | Storno             |
 | HELYESBITO | Helyesbítő         |
 
 ### NTAKPaymentType

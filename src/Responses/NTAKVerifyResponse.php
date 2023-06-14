@@ -6,25 +6,29 @@ use Natsu007\Ntak\Enums\NTAKVerifyStatus;
 
 class NTAKVerifyResponse
 {
-    protected       $successfulMessages;
-    protected       $unsuccessfulMessages;
-    protected       $status;
+    public       $successfulMessages;
+    public       $unsuccessfulMessages;
+    public       $headerErrors;
+    public       $status;
 
     /**
      * __construct
      *
      * @param  array            $successfulMessages
      * @param  array            $unsuccessfulMessages
+     * @param  array            $headerErrors
      * @param  NTAKVerifyStatus $status
      * @return void
      */
     public function __construct(
         array            $successfulMessages,
         array            $unsuccessfulMessages,
+        array            $headerErrors,
         NTAKVerifyStatus $status
     ) {
         $this->successfulMessages   = $successfulMessages;
         $this->unsuccessfulMessages = $unsuccessfulMessages;
+        $this->headerErrors         = $headerErrors;
         $this->status               = $status;
     }
 
