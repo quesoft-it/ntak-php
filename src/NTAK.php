@@ -125,6 +125,28 @@ class NTAK
     }
 
     /**
+     * resendOrder - Resend previously sent orders.
+     * Requires decoded rendelesOsszesitok array contents from 
+     * previously sent handleOrder request's lastRequest message.
+     * Useful when you need to resend order by verify request.
+     *
+     * @param  array[] $orders
+     * @return string
+     */
+    public function resendOrder($orders = []): string
+    {        
+        $message = [
+            'rendelesOsszesitok' => $orders,
+        ];
+
+        return $this->client->message(
+            $message,
+            $this->when,
+            '/rms/rendeles-osszesito'
+        )['feldolgozasAzonosito'];
+    }
+
+    /**
      * closeDay
      *
      * @param  Carbon      $start
