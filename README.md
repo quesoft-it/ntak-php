@@ -1,10 +1,12 @@
 # NTAK RMS PHP API / SDK (FOR PHP 7.1)
 
-**This is a fork from [https://github.com/kiralyta/ntak-php](https://github.com/kiralyta/ntak-php) repostitory, so I can use API in php 7.1. I hope it helps others who cannot use the latest version of php due to other dependencies. Remdme.md has been partially rewritten to comply with php 7.1. I left the other parts in their original form.**
+**This is a fork from [https://github.com/Natsu007/ntak-php](https://github.com/Natsu007/ntak-php) repostitory. We want to extend it some other functions. I hope it helps others. Readme.md is maintained. I left the other parts in their original form. We will merge the new developments of original repo.**
 
-**Update: I have created a development branch into which I am constantly synchronizing the latest updates from "kiralyta / ntak-php". I will rewrite the updated code if necessary so that it runs in php 7.1. Unit tests are performed on every update. Each update gets a tag.**
+**Orginal repo [https://github.com/kiralyta/ntak-php](https://github.com/kiralyta/ntak-php), thanks for sharing the solution**
 
-Welcome to my little package, that helps you make NTAK RMS requests like a boss.
+****
+
+This helps you make NTAK RMS requests like a boss.
 
 Table of Contents:
 - [Installation](#installation)
