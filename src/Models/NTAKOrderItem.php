@@ -1,12 +1,12 @@
 <?php
 
-namespace Natsu007\Ntak\Models;
+namespace QueSoft\Ntak\Models;
 
 use Carbon\Carbon;
-use Natsu007\Ntak\Enums\NTAKAmount;
-use Natsu007\Ntak\Enums\NTAKCategory;
-use Natsu007\Ntak\Enums\NTAKSubcategory;
-use Natsu007\Ntak\Enums\NTAKVat;
+use QueSoft\Ntak\Enums\NTAKAmount;
+use QueSoft\Ntak\Enums\NTAKCategory;
+use QueSoft\Ntak\Enums\NTAKSubcategory;
+use QueSoft\Ntak\Enums\NTAKVat;
 
 class NTAKOrderItem
 {

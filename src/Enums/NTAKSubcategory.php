@@ -1,9 +1,9 @@
 <?php
 
-namespace Natsu007\Ntak\Enums;
+namespace QueSoft\Ntak\Enums;
 
 use MyCLabs\Enum\Enum;
-use Natsu007\Ntak\Traits\EnumToArray;
+use QueSoft\Ntak\Traits\EnumToArray;
 
 final class NTAKSubcategory extends Enum
 {

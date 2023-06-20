@@ -1,8 +1,8 @@
 <?php
 
-namespace Natsu007\Ntak\Models;
+namespace QueSoft\Ntak\Models;
 
-use Natsu007\Ntak\Enums\NTAKPaymentType;
+use QueSoft\Ntak\Enums\NTAKPaymentType;
 
 class NTAKPayment
 {

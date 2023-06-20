@@ -1,6 +1,6 @@
 <?php
 
-namespace Natsu007\Ntak\Exceptions;
+namespace QueSoft\Ntak\Exceptions;
 
 use Exception;
 

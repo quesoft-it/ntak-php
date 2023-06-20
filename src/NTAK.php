@@ -1,15 +1,15 @@
 <?php
 
-namespace Natsu007\Ntak;
+namespace QueSoft\Ntak;
 
 use Carbon\Carbon;
-use Natsu007\Ntak\Enums\NTAKCategory;
-use Natsu007\Ntak\Enums\NTAKDayType;
-use Natsu007\Ntak\Enums\NTAKOrderType;
-use Natsu007\Ntak\Enums\NTAKSubcategory;
-use Natsu007\Ntak\Enums\NTAKVerifyStatus;
-use Natsu007\Ntak\Models\NTAKOrder;
-use Natsu007\Ntak\Responses\NTAKVerifyResponse;
+use QueSoft\Ntak\Enums\NTAKCategory;
+use QueSoft\Ntak\Enums\NTAKDayType;
+use QueSoft\Ntak\Enums\NTAKOrderType;
+use QueSoft\Ntak\Enums\NTAKSubcategory;
+use QueSoft\Ntak\Enums\NTAKVerifyStatus;
+use QueSoft\Ntak\Models\NTAKOrder;
+use QueSoft\Ntak\Responses\NTAKVerifyResponse;
 
 class NTAK
 {

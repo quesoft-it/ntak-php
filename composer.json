@@ -1,10 +1,10 @@
 {
-    "name": "natsu007/ntak-php",
+    "name": "quesoft/ntak-php",
     "description": "An easy to use NTAK PHP Api (for PHP 7.1)",
     "license": "MIT",
     "autoload": {
         "psr-4": {
-            "Natsu007\\Ntak\\": "src/"
+            "QueSoft\\Ntak\\": "src/"
         }
     },
     "authors": [

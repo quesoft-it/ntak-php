@@ -1,6 +1,6 @@
 <?php
 
-namespace Natsu007\Ntak\Enums;
+namespace QueSoft\Ntak\Enums;
 
 use MyCLabs\Enum\Enum;
 

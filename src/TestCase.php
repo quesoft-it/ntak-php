@@ -1,6 +1,6 @@
 <?php
 
-namespace Natsu007\Ntak;
+namespace QueSoft\Ntak;
 
 use PHPUnit\Framework\TestCase as FrameworkTestCase;
 

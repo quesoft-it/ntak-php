@@ -1,13 +1,13 @@
 <?php
 
-namespace Natsu007\Ntak;
+namespace QueSoft\Ntak;
 
 use Carbon\Carbon;
 use Gamegos\JWS\JWS;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
-use Natsu007\Ntak\Exceptions\NTAKClientException;
+use QueSoft\Ntak\Exceptions\NTAKClientException;
 
 class NTAKClient
 {

@@ -1,20 +1,20 @@
 <?php
 
-namespace Natsu007\Ntak\Tests;
+namespace QueSoft\Ntak\Tests;
 
 use Carbon\Carbon;
-use Natsu007\Ntak\Enums\NTAKAmount;
-use Natsu007\Ntak\Enums\NTAKCategory;
-use Natsu007\Ntak\Enums\NTAKOrderType;
-use Natsu007\Ntak\Enums\NTAKPaymentType;
-use Natsu007\Ntak\Enums\NTAKSubcategory;
-use Natsu007\Ntak\Enums\NTAKVat;
-use Natsu007\Ntak\Models\NTAKOrder;
-use Natsu007\Ntak\Models\NTAKOrderItem;
-use Natsu007\Ntak\Models\NTAKPayment;
-use Natsu007\Ntak\NTAK;
-use Natsu007\Ntak\NTAKClient;
-use Natsu007\Ntak\TestCase;
+use QueSoft\Ntak\Enums\NTAKAmount;
+use QueSoft\Ntak\Enums\NTAKCategory;
+use QueSoft\Ntak\Enums\NTAKOrderType;
+use QueSoft\Ntak\Enums\NTAKPaymentType;
+use QueSoft\Ntak\Enums\NTAKSubcategory;
+use QueSoft\Ntak\Enums\NTAKVat;
+use QueSoft\Ntak\Models\NTAKOrder;
+use QueSoft\Ntak\Models\NTAKOrderItem;
+use QueSoft\Ntak\Models\NTAKPayment;
+use QueSoft\Ntak\NTAK;
+use QueSoft\Ntak\NTAKClient;
+use QueSoft\Ntak\TestCase;
 use Ramsey\Uuid\Uuid;
 
 class StoreOrderTest extends TestCase

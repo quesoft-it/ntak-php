@@ -23,7 +23,7 @@ Table of Contents:
 ## Installation
 
 ``` bash
-composer require natsu007/ntak-php
+composer require quesoft/ntak-php
 ```
 
 ## Usage
@@ -33,7 +33,7 @@ composer require natsu007/ntak-php
 #### Create an API Client Instance
 
 ``` php
-use Natsu007\Ntak\NTAKClient;
+use QueSoft\Ntak\NTAKClient;
 
 $client = new NTAKClient(
     taxNumber:         'NTAK client tax nr',         // without `-` chars
@@ -61,11 +61,11 @@ $client->lastRequestTime(); // Returns an integer
 
 ``` php
 use Carbon\Carbon;
-use Natsu007\Ntak\Enums\NTAKAmount;
-use Natsu007\Ntak\Enums\NTAKCategory;
-use Natsu007\Ntak\Enums\NTAKSubcategory;
-use Natsu007\Ntak\Enums\NTAKVat;
-use Natsu007\Ntak\Models\NTAKOrderItem;
+use QueSoft\Ntak\Enums\NTAKAmount;
+use QueSoft\Ntak\Enums\NTAKCategory;
+use QueSoft\Ntak\Enums\NTAKSubcategory;
+use QueSoft\Ntak\Enums\NTAKVat;
+use QueSoft\Ntak\Models\NTAKOrderItem;
 
 $orderItem = new NTAKOrderItem(
     name:            'Absolut Vodka',               // Any kind of string
@@ -88,8 +88,8 @@ $orderItem = new NTAKOrderItem(
 #### Create a Payment Instance
 
 ``` php
-use Natsu007\Ntak\Enums\NTAKPaymentType;
-use Natsu007\Ntak\Models\NTAKPayment;
+use QueSoft\Ntak\Enums\NTAKPaymentType;
+use QueSoft\Ntak\Models\NTAKPayment;
 
 $payment = new NTAKPayment(
     paymentType:     NTAKPaymentType::BANKKARTYA(),
@@ -103,10 +103,10 @@ $payment = new NTAKPayment(
 
 ``` php
 use Carbon\Carbon;
-use Natsu007\Ntak\Enums\NTAKOrderType;
-use Natsu007\Ntak\Models\NTAKOrderItem;
-use Natsu007\Ntak\Models\NTAKOrder;
-use Natsu007\Ntak\Models\NTAKPayment;
+use QueSoft\Ntak\Enums\NTAKOrderType;
+use QueSoft\Ntak\Models\NTAKOrderItem;
+use QueSoft\Ntak\Models\NTAKOrder;
+use QueSoft\Ntak\Models\NTAKPayment;
 
 $order = new NTAKOrder(
     orderType:   NTAKOrderType::NORMAL(),       // You can control whether to store, update, or destroy an order
@@ -147,12 +147,31 @@ $order = new NTAKOrder(
 
 ``` php
 use Carbon\Carbon;
-use Natsu007\Ntak\Models\NTAKOrder;
-use Natsu007\Ntak\Models\NTAKPayment;
-use Natsu007\Ntak\NTAK;
+use QueSoft\Ntak\Models\NTAKOrder;
+use QueSoft\Ntak\Models\NTAKPayment;
+use QueSoft\Ntak\NTAK;
 
 $processId = NTAK::message($client, Carbon::now())
     ->handleOrder(new NTAKOrder(...));
+```
+
+> Returns the NTAK process ID string.
+>
+> - [NTAKOrder](#create-an-order-instance)
+
+#### Resend Order (Újraküldés)
+
+> Requires decoded rendelesOsszesitok array contents from previously sent handleOrder request's lastRequest message.
+> Useful when you need to resend order by verify request.
+
+``` php
+use Carbon\Carbon;
+use QueSoft\Ntak\Models\NTAKOrder;
+use QueSoft\Ntak\Models\NTAKPayment;
+use QueSoft\Ntak\NTAK;
+
+$processId = NTAK::message($client, Carbon::now())
+    ->resendOrder($rendelesOsszesitok);
 ```
 
 > Returns the NTAK process ID string.
@@ -163,8 +182,8 @@ $processId = NTAK::message($client, Carbon::now())
 
 ``` php
 use Carbon\Carbon;
-use Natsu007\Ntak\Enums\NTAKDayType;
-use Natsu007\Ntak\NTAK;
+use QueSoft\Ntak\Enums\NTAKDayType;
+use QueSoft\Ntak\NTAK;
 
 $processId = NTAK::message($client, Carbon::now())
     ->closeDay(
@@ -183,8 +202,8 @@ $processId = NTAK::message($client, Carbon::now())
 
 ``` php
 use Carbon\Carbon;
-use Natsu007\Ntak\Enums\NTAKDayType;
-use Natsu007\Ntak\NTAK;
+use QueSoft\Ntak\Enums\NTAKDayType;
+use QueSoft\Ntak\NTAK;
 
 $response = NTAK::message($client, Carbon::now())
     ->verify(
@@ -211,7 +230,7 @@ $response->headerErrors;         // Returns an array of the header errors
 Namespace of the enums:
 
 ``` php
-namespace Natsu007\Ntak\Enums;
+namespace QueSoft\Ntak\Enums;
 ```
 
 You can use the ```values()``` static method on any of the enums, in order to get the available values.
@@ -329,7 +348,7 @@ You can use the ```values()``` static method on any of the enums, in order to ge
 ## Contribution
 
 ``` bash
-git clone git@github.com:natsu007/ntak-php.git
+git clone git@github.com:quesoft-it/ntak-php.git
 cd ntak-php
 composer install --dev
 ```

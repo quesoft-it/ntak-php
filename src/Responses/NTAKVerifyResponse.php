@@ -1,8 +1,8 @@
 <?php
 
-namespace Natsu007\Ntak\Responses;
+namespace QueSoft\Ntak\Responses;
 
-use Natsu007\Ntak\Enums\NTAKVerifyStatus;
+use QueSoft\Ntak\Enums\NTAKVerifyStatus;
 
 class NTAKVerifyResponse
 {

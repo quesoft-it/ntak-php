@@ -1,12 +1,12 @@
 <?php
 
-namespace Natsu007\Ntak\Models;
+namespace QueSoft\Ntak\Models;
 
 use Carbon\Carbon;
 use InvalidArgumentException;
-use Natsu007\Ntak\Enums\NTAKOrderType;
-use Natsu007\Ntak\Enums\NTAKPaymentType;
-use Natsu007\Ntak\Enums\NTAKVat;
+use QueSoft\Ntak\Enums\NTAKOrderType;
+use QueSoft\Ntak\Enums\NTAKPaymentType;
+use QueSoft\Ntak\Enums\NTAKVat;
 
 class NTAKOrder
 {

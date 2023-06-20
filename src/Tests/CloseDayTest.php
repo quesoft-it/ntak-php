@@ -1,12 +1,12 @@
 <?php
 
-namespace Natsu007\Ntak\Tests;
+namespace QueSoft\Ntak\Tests;
 
 use Carbon\Carbon;
-use Natsu007\Ntak\Enums\NTAKDayType;
-use Natsu007\Ntak\NTAK;
-use Natsu007\Ntak\NTAKClient;
-use Natsu007\Ntak\TestCase;
+use QueSoft\Ntak\Enums\NTAKDayType;
+use QueSoft\Ntak\NTAK;
+use QueSoft\Ntak\NTAKClient;
+use QueSoft\Ntak\TestCase;
 
 class CloseDayTest extends TestCase
 {

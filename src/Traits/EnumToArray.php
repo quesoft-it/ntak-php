@@ -1,6 +1,6 @@
 <?php
 
-namespace Natsu007\Ntak\Traits;
+namespace QueSoft\Ntak\Traits;
 
 trait EnumToArray
 {

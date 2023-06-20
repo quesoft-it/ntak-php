@@ -1,10 +1,10 @@
 <?php
 
-namespace Natsu007\Ntak\Tests;
+namespace QueSoft\Ntak\Tests;
 
-use Natsu007\Ntak\Enums\NTAKCategory;
-use Natsu007\Ntak\Enums\NTAKSubcategory;
-use Natsu007\Ntak\NTAK;
+use QueSoft\Ntak\Enums\NTAKCategory;
+use QueSoft\Ntak\Enums\NTAKSubcategory;
+use QueSoft\Ntak\NTAK;
 use PHPUnit\Framework\TestCase;
 
 class CategoryTest extends TestCase
