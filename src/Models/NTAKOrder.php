@@ -7,6 +7,7 @@ use InvalidArgumentException;
 use QueSoft\Ntak\Enums\NTAKOrderType;
 use QueSoft\Ntak\Enums\NTAKPaymentType;
 use QueSoft\Ntak\Enums\NTAKVat;
+use QueSoft\Ntak\Enums\NTAKAggregateCause;
 
 class NTAKOrder
 {
@@ -22,6 +23,8 @@ class NTAKOrder
     public    $payments;
     public    $discount;
     public    $serviceFee;
+    public    $aggregated;
+    public    $aggregatedCause;
 
     /**
      * __construct
@@ -36,30 +39,36 @@ class NTAKOrder
      * @param  array|null|NTAKPayment[] $payments
      * @param  int                      $discount
      * @param  int                      $serviceFee
+     * @param  bool                     $aggregated
+     * @param  NTAKAggregateCause       $aggregatedCause
      * @return void
      */
     public function __construct(
-        NTAKOrderType    $orderType,
-        string           $orderId,
-        ?array           $orderItems = null,
-        ?string          $ntakOrderId = null,
-        ?Carbon          $start = null,
-        ?Carbon          $end = null,
-        bool             $isAtTheSpot = true,
-        ?array           $payments = null,
-        int              $discount = 0,
-        int              $serviceFee = 0
+        NTAKOrderType       $orderType,
+        string              $orderId,
+        ?array              $orderItems = null,
+        ?string             $ntakOrderId = null,
+        ?Carbon             $start = null,
+        ?Carbon             $end = null,
+        bool                $isAtTheSpot = true,
+        ?array              $payments = null,
+        int                 $discount = 0,
+        int                 $serviceFee = 0,
+        bool                $aggregated = false,
+        NTAKAggregateCause  $aggregatedCause = null
     ) {
-        $this->orderType   = $orderType;
-        $this->orderId     = $orderId;
-        $this->orderItems  = $orderItems;
-        $this->ntakOrderId = $ntakOrderId;
-        $this->start       = $start;
-        $this->end         = $end;
-        $this->isAtTheSpot = $isAtTheSpot;
-        $this->payments    = $payments;
-        $this->discount    = $discount;
-        $this->serviceFee  = $serviceFee;
+        $this->orderType        = $orderType;
+        $this->orderId          = $orderId;
+        $this->orderItems       = $orderItems;
+        $this->ntakOrderId      = $ntakOrderId;
+        $this->start            = $start;
+        $this->end              = $end;
+        $this->isAtTheSpot      = $isAtTheSpot;
+        $this->payments         = $payments;
+        $this->discount         = $discount;
+        $this->serviceFee       = $serviceFee;
+        $this->aggregated       = $aggregated;
+        $this->aggregatedCause  = $aggregatedCause;
 
         if ($orderType == NTAKOrderType::NORMAL()) {
             $this->validateIfNormal();

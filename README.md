@@ -106,6 +106,7 @@ $payment = new NTAKPayment(
 ``` php
 use Carbon\Carbon;
 use QueSoft\Ntak\Enums\NTAKOrderType;
+use QueSoft\Ntak\Enums\NTAKAggregateCause;
 use QueSoft\Ntak\Models\NTAKOrderItem;
 use QueSoft\Ntak\Models\NTAKOrder;
 use QueSoft\Ntak\Models\NTAKPayment;
@@ -131,7 +132,10 @@ $order = new NTAKOrder(
     serviceFee:  10,
 
     // Only on update / destroy
-    ntakOrderId: 'your-previous-order-id'
+    ntakOrderId: 'your-previous-order-id',
+
+    aggregated: false, // Is order aggregated
+    aggregatedCause: NTAKAggregateCause::UZEMSZUNET_ARAMSZOLGALTATAS_TERVEZETT_KIMARADASA_MIATT(), // If aggregated, It's cause. Defaults to null
 );
 ```
 
@@ -358,6 +362,18 @@ You can use the ```values()``` static method on any of the enums, in order to ge
 | RESZBEN_SIKERES  | RESZBEN_SIKERES    |
 | TELJESEN_SIKERES | TELJESEN_SIKERES   |
 | UJRA_KULDENDO    | UJRA_KULDENDO      |
+
+### NTAKAggregateCause
+
+| name                                                       | value ***string***                                         |
+| --------------------------------------------------------   | ---------------------------------------------------------  |
+| UZEMSZUNET_ARAMSZOLGALTATAS_TERVEZETT_KIMARADASA_MIATT     | UZEMSZUNET_ARAMSZOLGALTATAS_TERVEZETT_KIMARADASA_MIATT     |
+| UZEMSZUNET_INTERNETSZOLGALTATAS_TERVEZETT_KIMARADASA_MIATT | UZEMSZUNET_INTERNETSZOLGALTATAS_TERVEZETT_KIMARADASA_MIATT |
+| UZEMZAVAR_ARAMSZOLGALTATAS_ATMENETI_KIMARADASA_MIATT       | UZEMZAVAR_ARAMSZOLGALTATAS_ATMENETI_KIMARADASA_MIATT       |
+| UZEMZAVAR_INTERNETSZOLGALTATAS_ATMENETI_KIMARADASA_MIATT   | UZEMZAVAR_INTERNETSZOLGALTATAS_ATMENETI_KIMARADASA_MIATT   |
+| UZEMZAVAR_TERMESZETI_KATASZTROFA_MIATT                     | UZEMZAVAR_TERMESZETI_KATASZTROFA_MIATT                     |
+| UZEMZAVAR_LEJART_TANUSITVANY_MIATT                         | UZEMZAVAR_LEJART_TANUSITVANY_MIATT                         |
+| UZEMZAVAR_MUSZAKI_HIBA_MIATT                               | UZEMZAVAR_MUSZAKI_HIBA_MIATT                               |
 
 ## Contribution
 

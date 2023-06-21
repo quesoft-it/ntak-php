@@ -100,7 +100,12 @@ class NTAK
                     ? null
                     : $ntakOrder->end->timezone('Europe/Budapest')->toIso8601String(),
                 'helybenFogyasztott'           => $ntakOrder->isAtTheSpot,
-                'osszesitett'                  => false,
+                'osszesitett'                  => $ntakOrder->orderType == NTAKOrderType::NORMAL()
+                    ? $ntakOrder->aggregated
+                    : false,
+                'osszesitettIndoklasa'         => ($ntakOrder->orderType == NTAKOrderType::NORMAL() && $ntakOrder->aggregated === true)
+                    ? $ntakOrder->aggregatedCause->getKey()
+                    : null,
                 'fizetesiInformaciok'          => $ntakOrder->orderType == NTAKOrderType::SZTORNO()
                     ? null
                     : [
