@@ -183,6 +183,29 @@ class NTAK
     }
 
     /**
+     * resendCloseDay - Resend previously sent closed day data.
+     * Requires decoded zarasiInformaciok array contents from 
+     * previously sent closeDay request's lastRequest message.
+     * Useful when you need to resend close day by verify request.
+     *
+     * @param  array      $zarasiInformaciok
+     * @return string
+     */
+    public function resendCloseDay(
+        $zarasiInformaciok = []
+    ): string {
+        $message = [
+            'zarasiInformaciok' => $zarasiInformaciok,
+        ];
+
+        return $this->client->message(
+            $message,
+            $this->when,
+            '/rms/napi-zaras'
+        )['feldolgozasAzonosito'];
+    }
+
+    /**
      * verify
      *
      * @param  string $processId

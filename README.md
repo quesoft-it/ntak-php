@@ -161,15 +161,13 @@ $processId = NTAK::message($client, Carbon::now())
 >
 > - [NTAKOrder](#create-an-order-instance)
 
-#### Resend Order (Újraküldés)
+#### Resend Order (Újraküldés - Rendelésösszesítők)
 
 > Requires decoded rendelesOsszesitok array contents from previously sent handleOrder request's lastRequest message.
 > Useful when you need to resend order by verify request.
 
 ``` php
 use Carbon\Carbon;
-use QueSoft\Ntak\Models\NTAKOrder;
-use QueSoft\Ntak\Models\NTAKPayment;
 use QueSoft\Ntak\NTAK;
 
 $processId = NTAK::message($client, Carbon::now())
@@ -177,8 +175,7 @@ $processId = NTAK::message($client, Carbon::now())
 ```
 
 > Returns the NTAK process ID string.
->
-> - [NTAKOrder](#create-an-order-instance)
+
 
 #### Close Day (Napzárás)
 
@@ -199,6 +196,21 @@ $processId = NTAK::message($client, Carbon::now())
 > Returns the NTAK process ID string.
 >
 > - [NTAKDayType](#ntakdaytype)
+
+#### Resend Close Day (Újraküldés - Napzárás)
+
+> Requires decoded zarasiInformaciok array contents from previously sent closeDay request's lastRequest message.
+> Useful when you need to resend close day by verify request.
+
+``` php
+use Carbon\Carbon;
+use QueSoft\Ntak\NTAK;
+
+$processId = NTAK::message($client, Carbon::now())
+    ->resendCloseDay($zarasiInformaciok);
+```
+
+> Returns the NTAK process ID string.
 
 #### Verify (Ellenőrzés)
 
