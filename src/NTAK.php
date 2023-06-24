@@ -130,24 +130,24 @@ class NTAK
     }
 
     /**
-     * resendOrder - Resend previously sent orders.
-     * Requires decoded rendelesOsszesitok array contents from 
-     * previously sent handleOrder request's lastRequest message.
-     * Useful when you need to resend order by verify request.
+     * resendMessage - Resend previously sent message.
+     * Requires decoded array contents from 
+     * previously sent request's lastRequest message.
+     * Useful when you need to resend order or close by verify request.
+     * IMPORTANT to set message object when parameter to exactly the same timestamp of previous message!
      *
-     * @param  array[] $orders
+     * @param  array[] $message
+     * @param bool $order
      * @return string
      */
-    public function resendOrder($orders = []): string
-    {        
-        $message = [
-            'rendelesOsszesitok' => $orders,
-        ];
+    public function resendMessage($message = [], $order = true): string
+    {    
+        $uri = ($order) ? '/rms/rendeles-osszesito' : '/rms/napi-zaras';
 
         return $this->client->message(
             $message,
             $this->when,
-            '/rms/rendeles-osszesito'
+            $uri
         )['feldolgozasAzonosito'];
     }
 
@@ -178,29 +178,6 @@ class NTAK
                     : null,
                 'osszesBorravalo'    => $tips,
             ],
-        ];
-
-        return $this->client->message(
-            $message,
-            $this->when,
-            '/rms/napi-zaras'
-        )['feldolgozasAzonosito'];
-    }
-
-    /**
-     * resendCloseDay - Resend previously sent closed day data.
-     * Requires decoded zarasiInformaciok array contents from 
-     * previously sent closeDay request's lastRequest message.
-     * Useful when you need to resend close day by verify request.
-     *
-     * @param  array      $zarasiInformaciok
-     * @return string
-     */
-    public function resendCloseDay(
-        $zarasiInformaciok = []
-    ): string {
-        $message = [
-            'zarasiInformaciok' => $zarasiInformaciok,
         ];
 
         return $this->client->message(
