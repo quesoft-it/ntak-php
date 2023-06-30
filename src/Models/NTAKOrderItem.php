@@ -132,4 +132,29 @@ class NTAKOrderItem
             )
         )->buildRequest();
     }
+
+    /**
+     * buildTipAmountRequest
+     *
+     * @param  NTAKVat $vat
+     * @param  int     $price
+     * @param  Carbon  $when
+     * @return array
+     */
+    public static function buildTipAmountRequest(NTAKVat $vat, int $price, Carbon $when): array
+    {
+        return (
+            new static(
+                'Borravaló',
+                NTAKCategory::EGYEB(),
+                NTAKSubcategory::BORRAVALO(),
+                $vat,
+                $price,
+                NTAKAmount::DARAB(),
+                1,
+                1,
+                $when
+            )
+        )->buildRequest();
+    }
 }

@@ -7,6 +7,9 @@ use InvalidArgumentException;
 use QueSoft\Ntak\Enums\NTAKOrderType;
 use QueSoft\Ntak\Enums\NTAKPaymentType;
 use QueSoft\Ntak\Enums\NTAKVat;
+use QueSoft\Ntak\Enums\NTAKAmount;
+use QueSoft\Ntak\Enums\NTAKCategory;
+use QueSoft\Ntak\Enums\NTAKSubcategory;
 use QueSoft\Ntak\Enums\NTAKAggregateCause;
 
 class NTAKOrder
@@ -25,6 +28,7 @@ class NTAKOrder
     public    $serviceFee;
     public    $aggregated;
     public    $aggregatedCause;
+    public    $tip_amount;
 
     /**
      * __construct
@@ -41,6 +45,7 @@ class NTAKOrder
      * @param  int                      $serviceFee
      * @param  bool                     $aggregated
      * @param  NTAKAggregateCause       $aggregatedCause
+     * @param  int                      $tip_amount
      * @return void
      */
     public function __construct(
@@ -55,7 +60,8 @@ class NTAKOrder
         int                 $discount = 0,
         int                 $serviceFee = 0,
         bool                $aggregated = false,
-        NTAKAggregateCause  $aggregatedCause = null
+        NTAKAggregateCause  $aggregatedCause = null,
+        int                 $tip_amount = 0
     ) {
         $this->orderType        = $orderType;
         $this->orderId          = $orderId;
@@ -69,6 +75,7 @@ class NTAKOrder
         $this->serviceFee       = $serviceFee;
         $this->aggregated       = $aggregated;
         $this->aggregatedCause  = $aggregatedCause;
+        $this->tip_amount       = $tip_amount;
 
         if ($orderType == NTAKOrderType::NORMAL()) {
             $this->validateIfNormal();
@@ -106,6 +113,14 @@ class NTAKOrder
 
         if ($orderItems !== null && $this->serviceFee > 0) {
             $orderItems = $this->buildServiceFeeRequests($orderItems);
+        }
+
+        if ($orderItems !== null && $this->tip_amount > 0) {
+            $orderItems[] = NTAKOrderItem::buildTipAmountRequest(
+                NTAKVat::C_27(),
+                $this->tip_amount,
+                $this->start
+            );
         }
 
         return $orderItems;
@@ -227,7 +242,7 @@ class NTAKOrder
         if ($this->orderType != NTAKOrderType::SZTORNO()) {
             $total = $this->totalOfOrderItems($this->orderItems);
 
-            return $total + $total * $this->serviceFee / 100;
+            return $total + $total * $this->serviceFee / 100 + $this->tip_amount;
         }
 
         return 0;
@@ -247,7 +262,7 @@ class NTAKOrder
         if ($this->orderType != NTAKOrderType::SZTORNO()) {
             $total = $this->totalOfOrderItemsWithDiscount($this->orderItems);
 
-            return $total + $total * $this->serviceFee / 100;
+            return $total + $total * $this->serviceFee / 100 + $this->tip_amount;
         }
 
         return 0;

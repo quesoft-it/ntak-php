@@ -136,6 +136,8 @@ $order = new NTAKOrder(
 
     aggregated: false, // Is order aggregated
     aggregatedCause: NTAKAggregateCause::UZEMSZUNET_ARAMSZOLGALTATAS_TERVEZETT_KIMARADASA_MIATT(), // If aggregated, It's cause. Defaults to null
+
+    tip_amount: 0, //added to order as BORRAVALO type. Calculation order is items total, then discount, then service fee + tip_amount
 );
 ```
 

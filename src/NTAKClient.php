@@ -26,7 +26,7 @@ class NTAKClient
     protected      $lastRequestTime; // milliseconds
     protected      $fakeResponse = null;
 
-    protected static $prodUrl = 'https://rms.ntaktst.hu';
+    protected static $prodUrl = 'https://rms.ntak.hu/';
     protected static $testUrl = 'https://rms.tesztntak.hu';
 
     /**
